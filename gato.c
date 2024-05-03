@@ -2,16 +2,14 @@
 
 typedef struct Casilla Casilla;
 typedef struct Jugador Jugador;
+
 struct Casilla {
-	int x;
-	int y;
 	char valor;
 };
 
 struct Jugador {
 	char simbolo;
 	char nombre[50];
-	struct Casilla casillas[5];
 };
 
 struct Juego {
@@ -19,6 +17,7 @@ struct Juego {
 	int turno;
 	int seguir;
 };
+
 
 char obtenerValorEnCasilla(char valor) {
 	if(valor == 0) {
@@ -54,30 +53,32 @@ int main() {
 	char aux[50];
 	char simbaux;
 	
-	printf("Datos del jugador 1 (x): ");
-	scanf("\n%s", aux);
+	Jugador jugador1;
+	printf("\nDatos del jugador 1 (x): ");
+	scanf("\n%s", jugador1.nombre);
+	printf("\nSimbolo (x): ");
+	scanf("\n%c", &jugador1.simbolo);
 	fflush(stdin);
-	printf("Simbolo (x): ");
-	scanf("\n%c", &simbaux);
-	fflush(stdin);
-	Jugador jugador1 = {simbaux, aux, {0}};
-	
-	printf("Datos del jugador 2 (O): ");
-	scanf("\n%s", aux);
-	fflush(stdin);
-	printf("Simbolo (o): ");	
-	scanf("\n%c", &simbaux);
-	fflush(stdin);
-	Jugador jugador2 = {simbaux, aux, {0}};
 
+	Jugador jugador2;
+	printf("\nDatos del jugador 2 (O): ");
+	scanf("\n%s", jugador2.nombre);
+	printf("\nSimbolo (O): ");
+	scanf("\n%c", &jugador2.simbolo);
+	fflush(stdin);
+	
 	struct Juego juego = {{jugador1, jugador2}, 0, 1};
 	Casilla tablero[3][3];
 	
 	while(juego.seguir) {
+		int a= 0, b= 0;
 		mostrarTablero(tablero, 3);
-		printf("Turno de %s", juego.jugadores[juego.turno % 2].nombre);
+		printf("Turno de %s\n", juego.jugadores[juego.turno % 2].nombre);
 		if((juego.turno % 2) == 0) {
-			scanf("%c", aux);
+			scanf("\n%i,%i", &a, &b);
+		}
+		else {
+			scanf("\n%i,%i", &a, &b);
 		}
 	}
 	
