@@ -49,6 +49,7 @@ void siguienteTurno(struct Juego juego) {
 
 
 
+
 int main() {
 	char aux[50];
 	char simbaux;
