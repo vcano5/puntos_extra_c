@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#define maximo 6
+void limpiar_pantalla() {
+    #ifdef _WIN32
+    system("cls");
+    #else
+    system("clear");
+    #endif
+}
+int InicioSesion(int x)
+{
+    char usuario[5][50];
+    printf("\n Creando cuenta \nIngrese un nombre de usuario:");
+    scanf("\n%s", usuario[1]);
+    printf("Ingrese su contraseña:");
+    scanf("\n%s", usuario[2]);
+    printf("\nCuenta creada");
+    do 
+    {
+    printf("\n Inicia Sesion \nUsuario:");
+    scanf("%s",usuario[3]);
+    printf("Ingrese su contraseña:");
+    scanf("%s", usuario[4]);
+    
+    if (strcmp(usuario[1], usuario[3]) != 0 || strcmp(usuario[2], usuario[4]) != 0) {
+            printf("Usuario o Contraseña incorrecto\n");
+            x++;
+        } 
+        else 
+        {
+            printf("\nInicio de sesión exitoso\n");
+            break; 
+        }
+    } while (x < 3);
+}
+int ahorcado() 
+{
+    char secreta[20];
+    char mostrada[20];
+    char letra;
+    int intentos = 0, aciertos = 0 , largo , i, encontrado;
+
+    printf("Ingresa la palabra a encontrar: ");
+    scanf("%s",secreta);
+    limpiar_pantalla();
+    for (i = 0; i < strlen(secreta); i++) {
+        secreta[i] = toupper(secreta[i]);
+    }
+    largo = strlen(secreta);
+    memset(mostrada, '_', largo);
+    mostrada[largo] = '\0';
+    while (intentos < maximo && aciertos < largo) {
+        printf("\nPalabra: %s\n",mostrada);
+        printf("Ingrese una letra:");
+        scanf(" %c", &letra);
+        letra = toupper(letra);
+        encontrado = 0;
+        for (i = 0; i < largo; i++) {
+            if (secreta[i] == letra && mostrada[i] == '_') {
+                mostrada[i] = letra;
+                encontrado = 1;
+                aciertos++;
+            }
+        }
+        if (!encontrado) {
+            intentos++;
+            printf("No era, aun tienes %d intentos\n", maximo - intentos);
+        }
+    }
+    if (aciertos == largo) {
+        printf("\nGanaste, la palabra era: %s\n", secreta);
+    } else {
+        printf("\nPerdiste, la palabra: %s\n", secreta);
+    }
+
+    return 0;
+}
+int main()
+{
+    int ekis, seleccion; 
+    InicioSesion(ekis);
+    if(ekis==3)
+    {
+        printf("\n Adios");
+        return 0;
+    }
+    VolverSeleccion:
+    printf("\nQue quieres jugar?");
+    printf("\n1. Ahorcado");
+    printf("\n2. Gato");
+    
+    scanf("\n%i",&seleccion);
+    switch(seleccion)  
+    {
+        case 1:
+            ahorcado();
+            break;
+        case 2:
+            //Gato
+            break;
+        default:
+            printf("Opcion no valida\n");
+            goto VolverSeleccion;
+    }
+
+
+
+}
